@@ -1,0 +1,1 @@
+"""Overstats MaiBot plugin package."""
