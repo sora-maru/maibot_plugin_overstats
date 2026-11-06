@@ -6,11 +6,11 @@
 
 目标环境：**MaiBot 1.3.16 + maibot-plugin-sdk >= 2.16.0、< 3.0**。使用新版 SDK 插件入口、Manifest v2、配置模型和消息发送能力。不支持旧的 BasePlugin 运行时。兼容区间声明为 MaiBot 1.3.16～1.3.x；实际源码核对和本地 SDK 验证基于 1.3.16 / SDK 2.16.0，其他版本需自行联调。
 
-## 从旧版升级到 1.1.1
+## 从旧版升级到 1.1.2
 
 1. 停止 MaiBot，备份当前插件目录中的 `config.toml` 和 `data/plugins/local.overstats/` 数据目录（实际路径以实例配置为准）。
 2. 解压新版，把包内 `maibot_plugin_overstats` 里的文件覆盖到**已安装插件的原目录**。从 ZIP 安装的目录通常是 `plugins/local_overstats/`；手工安装的可能是 `plugins/maibot_plugin_overstats/`。以包含 `id = local.overstats` 清单的目录为准，不要另建一个重复插件目录。
-3. 保留原 `config.toml`，不要用示例覆盖它。新包不包含实际 `config.toml`，新增字段由 SDK 补默认值；配置版本仍为 `1.0.0`，表示兼容的配置格式，插件发布版本已升至 `1.1.1`。
+3. 保留原 `config.toml`，不要用示例覆盖它。新包不包含实际 `config.toml`，新增字段由 SDK 补默认值；配置版本仍为 `1.0.0`，表示兼容的配置格式，插件发布版本已升至 `1.1.2`。
 4. 启动 MaiBot 并刷新配置页面。所有分组和字段显示中文；旧配置中的地址、管理员和数据仍可使用。
 
 MaiBot 1.3.16 的“从 ZIP 安装”不支持覆盖同 ID 的已安装插件，会要求先卸载。升级推荐直接覆盖源文件，避免卸载时误删配置或数据。首次从 ZIP 安装后要重启 MaiBot 才会加载。
@@ -133,3 +133,7 @@ AI 任务最多等待 1800 秒，无自动重试，避免重复调用后端。�
 本地验证基于 MaiBot `v1.3.16`、SDK `v2.16.0` 的实际源码与 SDK 对象，使用本地 HTTP 模拟后端和消息发送 RPC 验证。详见包内 `VALIDATION.md`。**尚未连接你的真实 MaiBot 实例、QQ 适配器或 Overstats 服务进行端到端联调。**
 
 原插件版本 v2.10.0，参考提交 `e18c9dc831ca52a271f41f57047a86cbc46c3a5c`。移植日期 2026-11-05，改为 MaiBot SDK 入口与配置、独立 HTTP 桥接、本地状态存储和平台图片发送。本包沿用原项目 **GNU AGPL v3**，保留 `LICENSE` 和上游来源；MaiBot 移植版维护账号为 sora-maru；上方原项目链接用于标注来源，清单中的仓库地址指向独立移植仓库。
+
+## 插件图标
+
+图标为维基共享资源收录的守望先锋圆形标志，原 SVG 随插件附在 `assets/icon.svg`，无需访问外部图床。来源及权属见 [assets/NOTICE.md](assets/NOTICE.md)。本插件为社区项目，与暴雪娱乐无隶属关系，也未获其背书。
