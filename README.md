@@ -6,11 +6,11 @@
 
 目标环境：**MaiBot 1.3.16 + maibot-plugin-sdk >= 2.16.0、< 3.0**。使用新版 SDK 插件入口、Manifest v2、配置模型和消息发送能力。不支持旧的 BasePlugin 运行时。兼容区间声明为 MaiBot 1.3.16～1.3.x；实际源码核对和本地 SDK 验证基于 1.3.16 / SDK 2.16.0，其他版本需自行联调。
 
-## 从旧版升级到 1.1.2
+## 从旧版升级到 1.1.3
 
 1. 停止 MaiBot，备份当前插件目录中的 `config.toml` 和 `data/plugins/local.overstats/` 数据目录（实际路径以实例配置为准）。
 2. 解压新版，把包内 `maibot_plugin_overstats` 里的文件覆盖到**已安装插件的原目录**。从 ZIP 安装的目录通常是 `plugins/local_overstats/`；手工安装的可能是 `plugins/maibot_plugin_overstats/`。以包含 `id = local.overstats` 清单的目录为准，不要另建一个重复插件目录。
-3. 保留原 `config.toml`，不要用示例覆盖它。新包不包含实际 `config.toml`，新增字段由 SDK 补默认值；配置版本仍为 `1.0.0`，表示兼容的配置格式，插件发布版本已升至 `1.1.2`。
+3. 保留原 `config.toml`，不要用示例覆盖它。新包不包含实际 `config.toml`，新增字段由 SDK 补默认值；配置版本仍为 `1.0.0`，表示兼容的配置格式，插件发布版本已升至 `1.1.3`。
 4. 启动 MaiBot 并刷新配置页面。所有分组和字段显示中文；旧配置中的地址、管理员和数据仍可使用。
 
 MaiBot 1.3.16 的“从 ZIP 安装”不支持覆盖同 ID 的已安装插件，会要求先卸载。升级推荐直接覆盖源文件，避免卸载时误删配置或数据。首次从 ZIP 安装后要重启 MaiBot 才会加载。
