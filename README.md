@@ -1,4 +1,6 @@
-# Overstats for MaiBot 1.3.16
+# Overstats 守望先锋战绩查询
+
+守望先锋战绩查询：支持账号绑定、战绩总结、单局详情、英雄数据、排行榜和 AI 趣味分析。
 
 仓库：[sora-maru/maibot_plugin_overstats](https://github.com/sora-maru/maibot_plugin_overstats)。
 
