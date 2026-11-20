@@ -1,5 +1,31 @@
 # 本地验证记录
 
+## 1.1.4 · 2026-11-20 · MaiBot 1.4.7
+
+GitHub 官方 latest 正式版为 [v1.4.7](https://github.com/Mai-with-u/MaiBot/releases/tag/v1.4.7)，发布时间为北京时间 2026-11-19 01:15:12。对应源码提交 `b7f36825463413c47e61d44fe8a93427f6fe5a6f`，要求 SDK >= 2.23.0。
+
+**结果：新环境 59 项通过，旧 SDK 回归 54 项通过 / 5 项 Host 检查跳过；静态检查通过。**
+
+| 环境 | 验证内容 | 结果 |
+| --- | --- | --- |
+| Windows / Python 3.13 / SDK 2.23.0 / aiohttp 3.14.5 / Pydantic 2.14.4 | 完整插件回归及真实 MaiBot 1.4.7 加载、注册、停止流程 | 59 项通过 |
+| Windows / Python 3.13 / SDK 2.16.0 / aiohttp 3.13.2 / Pydantic 2.12.4 | 旧 SDK 的配置、原绑定数据、HTTP 与消息发送接口 | 54 项通过，5 项 Host 专用检查跳过 |
+
+本次验证直接使用实际 SDK 和 MaiBot 1.4.7 的 `ManifestValidator`、`PluginLoader`、`PluginRunner._build_plugin_registration_payload`、`ComponentRegistry` 和 `PluginTaskRegistry`，包括：
+
+- 清单在 Host 1.4.7 和 1.3.16 版本值下通过校验；实际读取本地依赖，没有使用强制兼容开关。
+- 真实加载器执行插件入口和工厂，真实 Runner 构造注册载荷，Host 注册命令及有效的阻塞式 `chat.receive.after_process` Hook。
+- 命令保留半角/全角斜杠和免斜杠写法，普通聊天不触发。
+- 接收账号 ID 匹配、连续艾特、带空格的群名片、其他账号艾特保留、原始消息不变，以及“原显示文本 + 匹配组”命令上下文。
+- 使用官方 `get_command_text` 和 `register_chat_hook_specs` 函数的原 AST 独立执行，不导入完整聊天业务；其他上述类为直接导入。
+- 宿主在命令返回后继续追踪长任务，取消后正确释放轻重池、单人并发和 AI 执行状态。
+- Basic 认证在新旧 aiohttp 下均覆盖图片、健康检查和同源图片下载，使用标准请求头后不再产生新版弃用警告。
+- 重启后继续使用旧配置版本 `1.0.0` 和 `local.overstats` 数据目录，保留绑定、聊天设置和最近 AI 目标。
+
+测试源码和命令见 [tests/README.md](tests/README.md)。没有改动官方 Host 源码，没有启动完整 MaiBot/QQ 适配器或访问用户部署的 Overstats，平台实际上传、模型分析与后台接口可用性仍需实际部署验证。QQ 官方适配器改变 ID 映射方式时，账号身份也可能改变，此次不猜测映射或自动迁移不同身份的数据。
+
+## 历史版本验证
+
 日期：2026-11-05。结论：**46 项本地测试通过，Ruff 静态检查通过**。这是源码兼容与模拟服务验证，不是线上部署验收。
 
 ## 参考源码

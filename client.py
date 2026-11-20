@@ -46,8 +46,17 @@ class OverstatsClient:
         if ":" in username:
             raise ValueError("后端验证账号不能包含冒号")
         self.auth_credentials = (username, password)
+        # Use the standard Basic header on both older aiohttp and 3.14+, where
+        # BasicAuth and ClientSession(auth=...) are deprecated. Keep latin-1,
+        # matching the encoding used by aiohttp.BasicAuth in prior releases.
+        headers = None
+        if username:
+            encoded = base64.b64encode(
+                f"{username}:{password}".encode("latin1")
+            ).decode("ascii")
+            headers = {"Authorization": f"Basic {encoded}"}
         self.session = aiohttp.ClientSession(
-            auth=aiohttp.BasicAuth(username, password) if username else None,
+            headers=headers,
             timeout=aiohttp.ClientTimeout(total=600, connect=20),
             connector=aiohttp.TCPConnector(limit=16),
         )

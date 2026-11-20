@@ -1,4 +1,4 @@
-"""MaiBot 1.3.16 / SDK 2.16.0 Overstats bridge.
+"""Overstats plugin for MaiBot 1.3.16 through 1.4.7 (SDK 2.16+).
 
 Original feature/API mapping: Zzzzzzouhang/astrbot_plugin_overstats (AGPL-3.0).
 Port: 2026-11-05. All backend deployment/management code is intentionally absent.
@@ -226,7 +226,7 @@ class OverstatsPlugin(MaiBotPlugin):
         text, _ = strip_bot_mention(
             text, kwargs.get("message") or {}, self.config.chat.nickname
         )
-        # Host 1.3.16 supplies both text and named regex groups.
+        # Supported hosts supply both original display text and named regex groups.
         groups = kwargs.get("matched_groups") or {}
         if not text and groups.get("command"):
             text = "/" + groups["command"] + " " + str(groups.get("args") or "")
@@ -241,7 +241,7 @@ class OverstatsPlugin(MaiBotPlugin):
     async def shortcuts(self, message=None, stream_id: str = "", **kwargs):
         if not self.config.plugin.enabled or not isinstance(message, dict):
             return {"action": "continue"}
-        # 1.3.16 no longer dispatches ON_MESSAGE. Rewrite through the live receive Hook;
+        # Supported hosts do not dispatch ON_MESSAGE. Rewrite through the live receive Hook;
         # the host then registers the session before entering the normal Command chain.
         info = message.get("message_info") or {}
         user = info.get("user_info") or {}

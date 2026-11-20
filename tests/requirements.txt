@@ -1,0 +1,9 @@
+pytest>=8,<10
+pytest-asyncio>=0.24,<2
+maibot-plugin-sdk>=2.16,<3
+# For optional tests against a local MaiBot source checkout:
+packaging>=24
+structlog>=25.4
+tomlkit>=0.13
+rich>=14
+jsonschema>=4.26,<5
